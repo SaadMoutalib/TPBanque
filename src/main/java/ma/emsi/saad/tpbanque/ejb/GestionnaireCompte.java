@@ -4,12 +4,14 @@
  */
 package ma.emsi.saad.tpbanque.ejb;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.sql.DataSourceDefinition;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import ma.emsi.saad.tpbanque.entities.CompteBancaire;
 
 /**
@@ -37,6 +39,11 @@ public class GestionnaireCompte {
     
     public Long nbComptes(){
         return (Long) em.createQuery("select count(c) from CompteBancaire c").getSingleResult();
+    }
+    
+    public List<CompteBancaire> getAllComptes(){
+        Query query = em.createNamedQuery("CompteBancaire.findAll");
+        return query.getResultList();
     }
     
     public void creerCompte(CompteBancaire c) {

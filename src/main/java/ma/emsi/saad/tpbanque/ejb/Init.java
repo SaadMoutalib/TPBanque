@@ -5,9 +5,9 @@
 package ma.emsi.saad.tpbanque.ejb;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.inject.Inject;
 import ma.emsi.saad.tpbanque.entities.CompteBancaire;
 
 /**
@@ -17,7 +17,7 @@ import ma.emsi.saad.tpbanque.entities.CompteBancaire;
 @Singleton
 @Startup
 public class Init {
-    @Inject
+    @EJB
     private GestionnaireCompte gc;
 
     @PostConstruct
