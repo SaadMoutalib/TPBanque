@@ -16,23 +16,44 @@
                     <h:form>
                         <h1><h:outputText value="List"/></h1>
                         <p:dataTable value="#{listeComptes.allComptes}" var="item">
-                            <p:column>
+                            <p:column width="40">
                                 <f:facet name="header">
                                     <h:outputText value="Id"/>
                                 </f:facet>
-                                <h:outputText value="#{item.id}"/>
+                                <h:link value="#{item.id}" outcome="transaction?id=#{item.id}"/>
                             </p:column>
-                            <p:column>
+                            <p:column width="300" >
                                 <f:facet name="header">
                                     <h:outputText value="Nom"/>
                                 </f:facet>
                                 <h:outputText value="#{item.nom}"/>
                             </p:column>
-                            <p:column>
+                            <p:column style="text-align:right;" width="60">
                                 <f:facet name="header">
                                     <h:outputText value="Solde"/>
                                 </f:facet>
-                                <h:outputText value="#{item.solde}"/>
+                                <h:outputText value="#{item.solde}">
+                                    <f:convertNumber pattern="###,###,##0"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="Supprimer"/>
+                                </f:facet>
+                                <h:commandLink action="#{listeComptes.supprimer(item)}"
+                                               title="Supprimer le compte de #{item.nom}" value=' supprimer'/>
+                            </p:column>
+                            <p:column width="120">
+                                <f:facet name="header">
+                                    <h:outputText value="modifier nom"/>
+                                </f:facet>
+                                <h:link value="modifier nom" outcome="compteDetail?id=#{item.id}"/>
+                            </p:column>
+                            <p:column width="40">
+                                <f:facet name="header">
+                                    <h:outputText value="historique"/>
+                                </f:facet>
+                                <h:link value="#{item.id}" outcome="historique?id=#{item.id}"/>
                             </p:column>
                         </p:dataTable>
                     </h:form>

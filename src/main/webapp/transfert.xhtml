@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template-defaut.xhtml">
+            <ui:param name="titre" value="Transfert d'argent"/>
+            
+            <ui:define name="content">
+                <f:view>
+                    <h:form id="form">
+                        <p:panelGrid columns="3">
+                            <p:outputLabel value="Identifiant du compte source:" for="source" />
+                            <p:inputText id="source" value="#{transfert.idsrc}" required="true" converterMessage="L'id est un nombre entier"/>
+                            <h:message for="source"/>
+                            <p:outputLabel value="Identifiant du compte destination:" for="destination" />
+                            <p:inputText id="destination" value="#{transfert.iddest}" required="true" converterMessage="L'id est un nombre entier" />
+                            <h:message for="destination"/>
+                            <p:outputLabel value="Montant a transferer:" for="montant" />
+                            <p:inputText id="montant" value="#{transfert.mnt}" required="true" converterMessage="Le montant est un nombre entier" />
+                            <h:message for="montant"/>
+                            <p:outputLabel value="Transferer" for="transfere" />
+                            <h:commandButton id="transfere" value="Transferer"
+                                             action="#{transfert.transactionBancaire}" />
+                            <h:commandButton id="check" value="check"
+                                             action="#{transfert.check}" />
+                        </p:panelGrid>
+
+                    </h:form>
+                </f:view>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

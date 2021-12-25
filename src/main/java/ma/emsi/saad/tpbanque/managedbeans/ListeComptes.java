@@ -28,15 +28,20 @@ public class ListeComptes implements Serializable {
      * Creates a new instance of ListeComptes
      */
     public ListeComptes() {
-        
+
     }
 
     public List<CompteBancaire> getAllComptes() {
-        if(comptesList == null)
-        {
+        if (comptesList == null) {
             comptesList = gc.getAllComptes();
         }
         return comptesList;
+    }
+
+    public String supprimer(CompteBancaire compte) {
+        gc.supprimer(compte);
+        Util.addFlashInfoMessage("Compte de " + compte.getNom() + " supprimé");
+        return "listeComptes?faces-redirect=true";
     }
 
 }

@@ -36,16 +36,49 @@ public class GestionnaireCompte {
 
     @PersistenceContext
     private EntityManager em;
-    
-    public Long nbComptes(){
+
+    public Long nbComptes() {
         return (Long) em.createQuery("select count(c) from CompteBancaire c").getSingleResult();
     }
-    
-    public List<CompteBancaire> getAllComptes(){
+
+    public List<CompteBancaire> getAllComptes() {
         Query query = em.createNamedQuery("CompteBancaire.findAll");
         return query.getResultList();
     }
-    
+
+    public CompteBancaire getCompteBancaire(Long idcmpt) {
+        return em.find(CompteBancaire.class, idcmpt);
+    }
+
+    public CompteBancaire update(CompteBancaire cmptB) {
+        return em.merge(cmptB);
+    }
+
+    public CompteBancaire findById(Long id) {
+        return em.find(CompteBancaire.class, id);
+    }
+
+    public void deposer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.deposer(montant);
+        update(compteBancaire);
+    }
+
+    public void retirer(CompteBancaire compteBancaire, int montant) {
+        compteBancaire.retirer(montant);
+        update(compteBancaire);
+    }
+
+    public void supprimer(CompteBancaire compte) {
+        em.remove(em.merge(compte));
+    }
+
+    public void transfert(CompteBancaire src, CompteBancaire dest, int mnt) {
+        src.retirer(mnt);
+        dest.deposer(mnt);
+        update(src);
+        update(dest);
+    }
+
     public void creerCompte(CompteBancaire c) {
         try {
             em.persist(c);

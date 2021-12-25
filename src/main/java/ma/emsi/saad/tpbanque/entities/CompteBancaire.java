@@ -5,11 +5,17 @@
 package ma.emsi.saad.tpbanque.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Version;
 
 /**
  *
@@ -25,6 +31,17 @@ public class CompteBancaire implements Serializable {
     private Long id;
     private String nom;
     private int solde;
+    @Version
+    private int version;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OperationBancaire> operations = new ArrayList<>();
+
+    public CompteBancaire() {
+    }
+
+    public List<OperationBancaire> getOperations() {
+        return operations;
+    }
 
     public Long getId() {
         return id;
@@ -49,10 +66,7 @@ public class CompteBancaire implements Serializable {
     public CompteBancaire(String nom, int solde) {
         this.nom = nom;
         this.solde = solde;
-    }
-    
-    public CompteBancaire (){
-        
+        operations.add(new OperationBancaire("Création du compte", solde));
     }
 
     public void deposer(int montant) {
@@ -65,6 +79,15 @@ public class CompteBancaire implements Serializable {
         } else {
             solde = 0;
         }
+        operations.add(new OperationBancaire("retirer", montant));
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public void setOperations(List<OperationBancaire> operations) {
+        this.operations = operations;
     }
 
     @Override
